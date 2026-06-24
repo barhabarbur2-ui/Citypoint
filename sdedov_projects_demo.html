@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרויקטים · SdeDov</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:  #141838;
+    --coral: #ed7174;
+    --off:   #f7f6f3;
+    --text:  #1d1d1b;
+    --muted: #6b6b6b;
+    --border: rgba(20,24,56,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Heebo', sans-serif; color: var(--text); background: #fff; direction: rtl; }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .back-link { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .back-link:hover { color: var(--coral); }
+  .header-center { font-family: 'Lexend Deca', sans-serif; font-size: 13px; font-weight: 600; color: var(--navy); }
+  .header-count { font-size: 12px; color: var(--muted); font-weight: 400; }
+
+  /* ── HERO ── */
+  .page-hero {
+    margin-top: 64px; background: var(--navy);
+    padding: 56px 60px 0; position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 60%, rgba(237,113,116,0.12) 0%, transparent 55%);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .hero-top { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 48px; gap: 40px; }
+  .page-hero h1 { font-size: 42px; font-weight: 800; color: white; line-height: 1.2; }
+  .page-hero h1 span { color: var(--coral); }
+  .page-hero-sub { font-size: 15px; color: rgba(255,255,255,0.45); margin-top: 10px; font-weight: 300; }
+  .hero-stats { display: flex; gap: 32px; flex-shrink: 0; }
+  .hero-stat-num { font-size: 28px; font-weight: 800; color: white; line-height: 1; }
+  .hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+  /* status tabs in hero bottom */
+  .status-tabs {
+    display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .status-tab {
+    padding: 16px 28px; font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.4); cursor: pointer;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    background: none; border-top: none; border-right: none; border-left: none;
+    font-family: 'Heebo', sans-serif;
+  }
+  .status-tab:hover { color: rgba(255,255,255,0.8); }
+  .status-tab.active { color: white; border-bottom-color: var(--coral); }
+  .status-tab .tab-count {
+    display: inline-block; margin-right: 6px;
+    background: rgba(255,255,255,0.1); border-radius: 10px;
+    padding: 1px 7px; font-size: 11px;
+  }
+  .status-tab.active .tab-count { background: var(--coral); }
+
+  /* ── FILTERS ── */
+  .filters-bar {
+    background: white; border-bottom: 1px solid var(--border);
+    padding: 0 60px; position: sticky; top: 64px; z-index: 90;
+  }
+  .filters-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; gap: 8px; padding: 14px 0; overflow-x: auto;
+  }
+  .filter-btn {
+    padding: 7px 18px; border-radius: 20px; border: 1.5px solid var(--border);
+    background: white; font-family: 'Heebo', sans-serif;
+    font-size: 13px; color: var(--muted); cursor: pointer; transition: all 0.18s;
+    white-space: nowrap; font-weight: 500;
+  }
+  .filter-btn:hover { border-color: var(--coral); color: var(--coral); }
+  .filter-btn.active { background: var(--navy); border-color: var(--navy); color: white; font-weight: 600; }
+  .filter-btn.active.coral { background: var(--coral); border-color: var(--coral); }
+  .filters-divider { width: 1px; height: 20px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
+
+  /* ── SORT ROW ── */
+  .sort-row { max-width: 1100px; margin: 0 auto; padding: 24px 60px 0; display: flex; align-items: center; justify-content: space-between; }
+  .results-count { font-size: 13px; color: var(--muted); }
+  .results-count strong { color: var(--text); }
+  .sort-select { font-family: 'Heebo', sans-serif; font-size: 13px; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; color: var(--text); background: white; cursor: pointer; outline: none; }
+
+  /* ── FEATURED PROJECT ── */
+  .featured-wrap { max-width: 1100px; margin: 28px auto 0; padding: 0 60px; }
+  .featured-project {
+    border-radius: 14px; overflow: hidden; position: relative;
+    height: 380px; cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .featured-project:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.18); }
+  .featured-project img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .featured-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(20,24,56,0.92) 0%, rgba(20,24,56,0.4) 60%, transparent 100%);
+    display: flex; align-items: center;
+    padding: 48px;
+  }
+  .featured-content { max-width: 420px; }
+  .featured-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 16px;
+  }
+  .featured-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+  .featured-content h2 { font-size: 32px; font-weight: 800; color: white; line-height: 1.25; margin-bottom: 12px; }
+  .featured-content p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 24px; }
+  .featured-specs { display: flex; gap: 20px; margin-bottom: 28px; }
+  .spec { }
+  .spec-val { font-size: 22px; font-weight: 800; color: white; line-height: 1; }
+  .spec-val span { font-size: 14px; color: var(--coral); }
+  .spec-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 3px; }
+  .featured-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--coral); color: white;
+    padding: 12px 24px; border-radius: 25px;
+    font-size: 13px; font-weight: 700; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .featured-cta:hover { background: #d9595c; }
+  .featured-status-badge {
+    position: absolute; top: 24px; left: 24px;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 11px; font-weight: 700; color: var(--navy);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .status-live { width: 7px; height: 7px; border-radius: 50%; background: #4caf50; animation: pulse-green 2s infinite; }
+  @keyframes pulse-green { 0%,100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.4); } 50% { box-shadow: 0 0 0 6px rgba(76,175,80,0); } }
+
+  /* ── PROJECTS GRID ── */
+  .grid-wrap { max-width: 1100px; margin: 36px auto 0; padding: 0 60px 80px; display: flex; flex-direction: column; gap: 20px; }
+
+  .project-card {
+    border-radius: 12px; overflow: hidden; background: white;
+    border: 1px solid var(--border);
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: row-reverse;
+    height: 220px;
+  }
+  .project-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.09); }
+
+  .card-img { width: 300px; flex-shrink: 0; overflow: hidden; background: var(--off); position: relative; height: 100%; }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+  .project-card:hover .card-img img { transform: scale(1.04); }
+  .card-status {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(6px);
+    border-radius: 14px; padding: 5px 12px;
+    font-size: 11px; font-weight: 700; color: var(--navy);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .status-dot.green { background: #4caf50; }
+  .status-dot.orange { background: #ff9800; }
+  .status-dot.blue { background: #448bc9; }
+
+  .card-body { padding: 24px; display: flex; flex-direction: column; }
+  .card-developer { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .card-title { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+  .card-location { font-size: 12px; color: var(--muted); margin-bottom: 18px; display: flex; align-items: center; gap: 5px; }
+  .card-location::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
+  .card-specs { display: flex; gap: 20px; margin-bottom: 18px; }
+  .card-spec-val { font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .card-spec-val span { font-size: 13px; color: var(--coral); }
+  .card-spec-label { font-size: 10px; color: var(--muted); margin-top: 3px; }
+  .card-divider { height: 1px; background: var(--border); margin-bottom: 14px; }
+  .card-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .card-feature { font-size: 11px; padding: 4px 11px; border-radius: 12px; background: var(--off); color: var(--muted); }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+  .card-price { font-size: 14px; font-weight: 800; color: var(--navy); }
+  .card-price span { font-size: 11px; color: var(--muted); font-weight: 400; }
+  .card-cta { font-size: 13px; font-weight: 700; color: var(--coral); text-decoration: none; }
+
+  /* ── AD SLOT ── */
+  .ad-slot-grid {
+    border-radius: 12px; border: 1.5px dashed rgba(20,24,56,0.1);
+    background: var(--off); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    min-height: 200px; position: relative;
+  }
+  .ad-tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(20,24,56,0.25); font-weight: 600; position: absolute; top: 12px; right: 14px; }
+  .ad-format { font-size: 12px; color: var(--coral); font-weight: 600; opacity: 0.7; }
+  .ad-dims { font-size: 11px; color: rgba(20,24,56,0.3); }
+
+  /* ── LOAD MORE ── */
+  .load-more-wrap { text-align: center; padding: 0 0 80px; }
+  .load-more-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 36px; border-radius: 30px;
+    border: 1.5px solid var(--border); background: white;
+    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--text); cursor: pointer; transition: all 0.2s;
+  }
+  .load-more-btn:hover { border-color: var(--coral); color: var(--coral); }
+  .load-more-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--navy); padding: 28px 60px; }
+  .footer-simple { display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); }
+  .footer-districts { display: flex; align-items: center; gap: 20px; font-size: 12px; color: rgba(255,255,255,0.5); font-family: 'Lexend Deca', sans-serif; }
+@media (max-width: 600px) {
+  header { padding: 0 16px; height: 60px; }
+  nav { display: none; }
+  .page-hero { padding: 16px 16px 0; margin-top: 60px; }
+  .hero-top { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 24px; }
+  .page-hero h1 { font-size: 26px; }
+  .page-hero-sub { font-size: 13px; margin-top: 6px; }
+  .hero-stats { gap: 20px; }
+  .hero-stat-num { font-size: 22px; }
+  .hero-stat-label { font-size: 10px; }
+  .status-tabs { overflow-x: auto; flex-wrap: nowrap; padding: 0 16px; gap: 6px; -webkit-overflow-scrolling: touch; }
+  .status-tab { white-space: nowrap; font-size: 12px; padding: 6px 12px; }
+  .filter-bar { overflow-x: auto; flex-wrap: nowrap; padding: 12px 16px; gap: 8px; -webkit-overflow-scrolling: touch; }
+  .filter-btn { white-space: nowrap; font-size: 12px; padding: 6px 12px; flex-shrink: 0; }
+  .results-bar { padding: 12px 16px; font-size: 12px; }
+  .sort-select { font-size: 12px; }
+  .featured-wrap { padding: 0 16px; }
+  .featured-project { height: 320px; border-radius: 12px; }
+  .featured-overlay { padding: 16px; justify-content: flex-end; }
+  .featured-content { max-width: 100%; }
+  .featured-badge { font-size: 10px; margin-bottom: 8px; }
+  .featured-content h2 { font-size: 22px; margin-bottom: 6px; }
+  .featured-content p { font-size: 12px; margin-bottom: 14px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+  .featured-specs { flex-wrap: wrap; gap: 8px 16px; margin-bottom: 16px; }
+  .spec-val { font-size: 18px; }
+  .spec-label { font-size: 9px; }
+  .featured-cta { padding: 10px 24px; font-size: 13px; align-self: flex-start; }
+  .featured-status-badge { font-size: 10px; top: 12px; left: 12px; padding: 4px 10px; }
+  [style*="max-width:1100px"] { padding: 0 12px 48px !important; }
+  [style*="border-radius:12px;overflow:hidden;border"] { flex-direction: column !important; height: auto !important; }
+  [style*="width:280px;flex-shrink:0"] { width: 100% !important; height: 160px !important; }
+  [style*="flex:1;padding:24px"] { padding: 14px !important; }
+  [style*="display:flex;gap:24px"] { gap: 12px !important; }
+  [style*="font-size:20px;font-weight:800;color:#141838"] { font-size: 16px !important; }
+  [style*="display:flex;gap:6px"] { flex-wrap: wrap !important; gap: 4px !important; }
+  [style*="display:flex;align-items:center;justify-content:space-between;border-top"] { flex-wrap: wrap !important; gap: 8px !important; }
+  [style*="font-size:14px;font-weight:800"] { font-size: 13px !important; }
+  footer { padding: 28px 16px; }
+  .footer-simple { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-districts { flex-wrap: wrap; justify-content: center; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <a href="index.html" class="back-link">→ חזרה לשדה דב</a>
+  <a href="index.html" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;text-decoration:none;opacity:0.85;" title="דף הבית">
+
+    <svg width="30" height="29" viewBox="0 0 128.55 122.64" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);">
+      <path fill="#141838" d="M104.36,42.89c-5.64,2.57-9.01,8.31-8.87,14.51.02.7.02,1.4,0,2.11.15,6.58-1.11,12.51-3.79,17.79-2.68,5.28-6.39,9.41-11.13,12.4-4.75,2.98-10.1,4.48-16.07,4.48s-11.56-1.49-16.3-4.48c-4.75-2.98-8.49-7.12-11.25-12.4-2.75-5.28-4.06-11.21-3.9-17.79-.15-6.73,1.15-12.7,3.9-17.91,2.75-5.2,6.5-9.33,11.25-12.4.86-.56,1.75-1.06,2.66-1.52,4.92-2.45,7.77-7.74,7.4-13.23h0c-.69-10.22-11.21-16.91-20.67-12.97-2.15.89-4.24,1.91-6.26,3.04-9.72,5.43-17.37,12.89-22.96,22.38C2.79,36.41,0,47.27,0,59.51s2.79,23.11,8.38,32.6c5.59,9.49,13.24,16.95,22.96,22.38,9.72,5.43,20.77,8.15,33.17,8.15s23.22-2.72,32.94-8.15c9.72-5.43,17.33-12.89,22.84-22.38,5.51-9.49,8.26-20.35,8.26-32.6,0-.46,0-.92-.01-1.38-.21-12.3-12.98-20.34-24.17-15.25h0Z"/>
+      <circle fill="#ed7174" cx="87.51" cy="20.12" r="20.12"/>
+    </svg>
+  </a>
+  <div style="font-family:'Lexend Deca',sans-serif;font-size:13px;font-weight:600;color:var(--navy);">פרויקטים <span style="font-weight:400;color:var(--muted);">· 14</span></div>
+</header>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <h1>הפרויקטים של<br><svg style="height:18px;width:auto;display:inline-block;vertical-align:middle;" viewBox="0 0 255.72 41.92" xmlns="http://www.w3.org/2000/svg">
+  <g id="ph-Layer_1-2" >
+    <g>
+      <g>
+        <path fill="white" d="M38.07,41.92v-6.55h35.8v6.55h-35.8ZM67.88,39.04h-6.05V15.41c0-2.5-.68-4.44-2.05-5.83-1.37-1.39-3.33-2.09-5.87-2.09h-13.68V.94h14.69c2.78,0,5.14.52,7.06,1.55,1.92,1.03,3.38,2.54,4.39,4.54,1.01,1.99,1.51,4.45,1.51,7.38v24.63Z"/>
+        <path fill="white" d="M99.43,41.92V7.49h-22.83V.94h34.86v6.55h-5.98v34.43h-6.05Z"/>
+        <path fill="white" d="M156.83,41.92h-9.51v-23.77c0-2.4-.58-4.22-1.73-5.47-1.15-1.25-2.95-1.87-5.4-1.87h-21.32V.5h22.62c3.79,0,6.81.6,9.04,1.8,2.23,1.2,3.84,2.95,4.83,5.26.98,2.3,1.48,5.33,1.48,9.08v25.28ZM129.39,41.92h-9.51v-24.42h9.51v24.42Z"/>
+        <path fill="white" d="M184.63,41.92V10.8h-22.18V.5h37.52v10.3h-5.83v31.11h-9.51Z"/>
+        <path fill="white" d="M220.29,41.92h-9.58l-4.75-40.12v-.65l9.36-1.15,4.97,41.92ZM234.19,13.25c-1.3,3.27-3.31,5.68-6.05,7.24-2.74,1.56-6.34,2.34-10.8,2.34h-4.03v-6.48h1.87c3.07,0,5.45-.55,7.13-1.66,1.68-1.1,2.84-2.78,3.49-5.04.65-2.26.97-5.3.97-9.15h9.36c0,5.23-.65,9.48-1.94,12.75ZM252.52,23.73c-2.14,6.08-5.54,10.62-10.19,13.65-4.66,3.02-10.8,4.54-18.44,4.54h-8.79v-9.29h7.71c5.95,0,10.62-1.15,14.01-3.46,3.38-2.3,5.8-5.79,7.24-10.44s2.16-10.73,2.16-18.22h9.51c0,9.41-1.07,17.15-3.21,23.23Z"/>
+      </g>
+      <circle fill="#ed7174" cx="12.21" cy="28.91" r="12.21"/>
+    </g>
+  </g>
+</svg></h1>
+        <p class="page-hero-sub">מגורים, מסחר ומשרדים — כל מה שנבנה ומתוכנן במחתם</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">14</div>
+          <div class="hero-stat-label">פרויקטים</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">3,400</div>
+          <div class="hero-stat-label">יחידות בבנייה</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2027</div>
+          <div class="hero-stat-label">מסירה ראשונה</div>
+        </div>
+      </div>
+    </div>
+    <div class="status-tabs">
+      <button class="status-tab active" onclick="setTab(this)">הכל <span class="tab-count">14</span></button>
+      <button class="status-tab" onclick="setTab(this)">בבנייה <span class="tab-count">5</span></button>
+      <button class="status-tab" onclick="setTab(this)">שיווק <span class="tab-count">6</span></button>
+      <button class="status-tab" onclick="setTab(this)">תכנון <span class="tab-count">3</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ── FILTERS ── -->
+<div class="filters-bar">
+  <div class="filters-inner">
+    <button class="filter-btn active coral" onclick="setFilter(this)">כל הסוגים</button>
+    <button class="filter-btn" onclick="setFilter(this)">מגורים</button>
+    <button class="filter-btn" onclick="setFilter(this)">מסחר</button>
+    <button class="filter-btn" onclick="setFilter(this)">מעורב</button>
+    <button class="filter-btn" onclick="setFilter(this)">משרדים</button>
+    <div class="filters-divider"></div>
+    <button class="filter-btn" onclick="setFilter(this)">3 חדרים+</button>
+    <button class="filter-btn" onclick="setFilter(this)">עם חניה</button>
+    <button class="filter-btn" onclick="setFilter(this)">קו ראשון לים</button>
+  </div>
+</div>
+
+<!-- ── SORT ── -->
+<div class="sort-row">
+  <div class="results-count"><strong>14</strong> פרויקטים נמצאו</div>
+  <select class="sort-select">
+    <option>מסירה קרובה</option>
+    <option>מחיר עולה</option>
+    <option>מחיר יורד</option>
+    <option>חדש באתר</option>
+  </select>
+</div>
+
+<!-- ── FEATURED ── -->
+<div class="featured-wrap">
+  <div class="featured-project">
+    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=85" alt="מגדל שדה דב" />
+    <div class="featured-overlay">
+      <div class="featured-content">
+        <div class="featured-badge">פרויקט מומלץ · בבנייה פעילה</div>
+        <h2>מגדל שדה דב A</h2>
+        <p>הפרויקט הראשון שמסתמן ברקיע שדה דב — 38 קומות של מגורים יוקרתיים עם נוף ים בלתי מוגבל</p>
+        <div class="featured-specs">
+          <div class="spec">
+            <div class="spec-val">38<span>K</span></div>
+            <div class="spec-label">קומות</div>
+          </div>
+          <div class="spec">
+            <div class="spec-val">320</div>
+            <div class="spec-label">יחידות דיור</div>
+          </div>
+          <div class="spec">
+            <div class="spec-val">2027</div>
+            <div class="spec-label">מסירה</div>
+          </div>
+          <div class="spec">
+            <div class="spec-val">3.2<span>M+</span></div>
+            <div class="spec-label">מחיר התחלה</div>
+          </div>
+        </div>
+        <a href="sdedov_utopia_demo.html" class="featured-cta">לפרטי הפרויקט ←</a>
+      </div>
+    </div>
+    <div class="featured-status-badge">
+      <div class="status-live"></div>
+      בבנייה פעילה
+    </div>
+  </div>
+</div>
+
+<!-- ── GRID ── -->
+<div style="max-width:1100px;margin:36px auto 0;padding:0 60px 80px;display:flex;flex-direction:column;gap:18px;">
+
+  <!-- אוטופיה -->
+  <a href="sdedov_utopia_demo.html" style="display:flex;border-radius:12px;overflow:hidden;border:2px solid rgba(237,113,116,0.3);background:white;height:200px;text-decoration:none;color:inherit;transition:box-shadow 0.2s;box-shadow:0 4px 20px rgba(237,113,116,0.12);">
+    <div style="width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+      <img src="CityPoint/autopia.png" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.95);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;color:#141838;display:flex;align-items:center;gap:6px;"><div style="width:7px;height:7px;border-radius:50%;background:#4caf50;animation:pulse 2s infinite;"></div> בבנייה פעילה</div>
+      <div style="position:absolute;bottom:12px;right:12px;background:var(--coral);border-radius:14px;padding:4px 10px;font-size:10px;font-weight:700;color:white;">חדש</div>
+    </div>
+    <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:4px;">אוטופיה גרופ</div>
+        <div style="font-size:20px;font-weight:800;color:#141838;margin-bottom:4px;">אוטופיה</div>
+        <div style="font-size:12px;color:#6b6b6b;display:flex;align-items:center;gap:5px;margin-bottom:16px;"><span style="width:5px;height:5px;border-radius:50%;background:#ed7174;display:inline-block;"></span>קו ראשון לים · שדה דב</div>
+        <div style="display:flex;gap:24px;">
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">42</div><div style="font-size:10px;color:#6b6b6b;">קומות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">380</div><div style="font-size:10px;color:#6b6b6b;">יחידות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">2027</div><div style="font-size:10px;color:#6b6b6b;">מסירה</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(20,24,56,0.07);padding-top:14px;">
+        <div style="display:flex;gap:6px;"><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">3–5 חדרים</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">פנטהאוז</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:rgba(237,113,116,0.08);color:#ed7174;">קו ראשון לים</span></div>
+        <div style="display:flex;align-items:center;gap:20px;"><span style="font-size:14px;font-weight:800;color:#141838;">3.8M ₪</span><span style="font-size:13px;font-weight:700;color:#ed7174;">פרטים ←</span></div>
+      </div>
+    </div>
+  </a>
+
+  <!-- כפר שדה דב -->
+  <a href="#" style="display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(20,24,56,0.08);background:white;height:200px;text-decoration:none;color:inherit;transition:box-shadow 0.2s;">
+    <div style="width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.95);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;color:#141838;display:flex;align-items:center;gap:6px;"><div style="width:7px;height:7px;border-radius:50%;background:#ff9800;"></div> שיווק</div>
+    </div>
+    <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:4px;">דימרי</div>
+        <div style="font-size:20px;font-weight:800;color:#141838;margin-bottom:4px;">כפר שדה דב</div>
+        <div style="font-size:12px;color:#6b6b6b;display:flex;align-items:center;gap:5px;margin-bottom:16px;"><span style="width:5px;height:5px;border-radius:50%;background:#ed7174;display:inline-block;"></span>שכונת הנמל החדשה</div>
+        <div style="display:flex;gap:24px;">
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">6</div><div style="font-size:10px;color:#6b6b6b;">בניינים</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">280</div><div style="font-size:10px;color:#6b6b6b;">יחידות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">2028</div><div style="font-size:10px;color:#6b6b6b;">מסירה</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(20,24,56,0.07);padding-top:14px;">
+        <div style="display:flex;gap:6px;"><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">3–5 חדרים</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">בנייה ירוקה</span></div>
+        <div style="display:flex;align-items:center;gap:20px;"><span style="font-size:14px;font-weight:800;color:#141838;">2.8M ₪</span><span style="font-size:13px;font-weight:700;color:#ed7174;">פרטים ←</span></div>
+      </div>
+    </div>
+  </a>
+
+  <!-- The Point -->
+  <a href="#" style="display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(20,24,56,0.08);background:white;height:200px;text-decoration:none;color:inherit;transition:box-shadow 0.2s;">
+    <div style="width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+      <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.95);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;color:#141838;display:flex;align-items:center;gap:6px;"><div style="width:7px;height:7px;border-radius:50%;background:#448bc9;"></div> תכנון</div>
+    </div>
+    <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:4px;">אפריקה ישראל</div>
+        <div style="font-size:20px;font-weight:800;color:#141838;margin-bottom:4px;">The Point</div>
+        <div style="font-size:12px;color:#6b6b6b;display:flex;align-items:center;gap:5px;margin-bottom:16px;"><span style="width:5px;height:5px;border-radius:50%;background:#ed7174;display:inline-block;"></span>מרכז שדה דב</div>
+        <div style="display:flex;gap:24px;">
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">45</div><div style="font-size:10px;color:#6b6b6b;">קומות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">500</div><div style="font-size:10px;color:#6b6b6b;">יחידות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">2029</div><div style="font-size:10px;color:#6b6b6b;">מסירה</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(20,24,56,0.07);padding-top:14px;">
+        <div style="display:flex;gap:6px;"><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">מגורים</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">מסחר</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">משרדים</span></div>
+        <div style="display:flex;align-items:center;gap:20px;"><span style="font-size:13px;color:#6b6b6b;">מחיר לא פורסם</span><span style="font-size:13px;font-weight:700;color:#ed7174;">פרטים ←</span></div>
+      </div>
+    </div>
+  </a>
+
+  <!-- AD -->
+  <div style="border-radius:12px;border:1.5px dashed rgba(20,24,56,0.1);background:#f7f6f3;height:90px;display:flex;align-items:center;justify-content:center;gap:12px;position:relative;">
+    <span style="position:absolute;top:10px;right:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(20,24,56,0.25);font-weight:600;">פרסומת</span>
+    <span style="font-size:12px;color:#ed7174;font-weight:600;opacity:0.7;">Banner Ad</span>
+    <span style="font-size:11px;color:rgba(20,24,56,0.3);">970 × 90</span>
+  </div>
+
+  <!-- שדה דב על הים -->
+  <a href="#" style="display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(20,24,56,0.08);background:white;height:200px;text-decoration:none;color:inherit;">
+    <div style="width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+      <img src="https://images.unsplash.com/photo-1515263487990-61b07816b324?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.95);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;color:#141838;display:flex;align-items:center;gap:6px;"><div style="width:7px;height:7px;border-radius:50%;background:#4caf50;"></div> בבנייה</div>
+    </div>
+    <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:4px;">אשל</div>
+        <div style="font-size:20px;font-weight:800;color:#141838;margin-bottom:4px;">שדה דב על הים</div>
+        <div style="font-size:12px;color:#6b6b6b;display:flex;align-items:center;gap:5px;margin-bottom:16px;"><span style="width:5px;height:5px;border-radius:50%;background:#ed7174;display:inline-block;"></span>רצועת החוף, שדה דב</div>
+        <div style="display:flex;gap:24px;">
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">22</div><div style="font-size:10px;color:#6b6b6b;">קומות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">180</div><div style="font-size:10px;color:#6b6b6b;">יחידות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">2027</div><div style="font-size:10px;color:#6b6b6b;">מסירה</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(20,24,56,0.07);padding-top:14px;">
+        <div style="display:flex;gap:6px;"><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">קו ראשון לים</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">בריכה</span></div>
+        <div style="display:flex;align-items:center;gap:20px;"><span style="font-size:14px;font-weight:800;color:#141838;">4.5M ₪</span><span style="font-size:13px;font-weight:700;color:#ed7174;">פרטים ←</span></div>
+      </div>
+    </div>
+  </a>
+
+  <!-- גן שדה דב -->
+  <a href="#" style="display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(20,24,56,0.08);background:white;height:200px;text-decoration:none;color:inherit;">
+    <div style="width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+      <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.95);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;color:#141838;display:flex;align-items:center;gap:6px;"><div style="width:7px;height:7px;border-radius:50%;background:#ff9800;"></div> שיווק</div>
+    </div>
+    <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:4px;">אורו</div>
+        <div style="font-size:20px;font-weight:800;color:#141838;margin-bottom:4px;">גן שדה דב</div>
+        <div style="font-size:12px;color:#6b6b6b;display:flex;align-items:center;gap:5px;margin-bottom:16px;"><span style="width:5px;height:5px;border-radius:50%;background:#ed7174;display:inline-block;"></span>סמוך לפארק העיר</div>
+        <div style="display:flex;gap:24px;">
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">8</div><div style="font-size:10px;color:#6b6b6b;">קומות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">96</div><div style="font-size:10px;color:#6b6b6b;">יחידות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">2027</div><div style="font-size:10px;color:#6b6b6b;">מסירה</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(20,24,56,0.07);padding-top:14px;">
+        <div style="display:flex;gap:6px;"><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">3–4 חדרים</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">גינה פרטית</span></div>
+        <div style="display:flex;align-items:center;gap:20px;"><span style="font-size:14px;font-weight:800;color:#141838;">2.4M ₪</span><span style="font-size:13px;font-weight:700;color:#ed7174;">פרטים ←</span></div>
+      </div>
+    </div>
+  </a>
+
+  <!-- מגדלי הנמל -->
+  <a href="#" style="display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(20,24,56,0.08);background:white;height:200px;text-decoration:none;color:inherit;">
+    <div style="width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+      <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.95);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;color:#141838;display:flex;align-items:center;gap:6px;"><div style="width:7px;height:7px;border-radius:50%;background:#4caf50;"></div> בבנייה</div>
+    </div>
+    <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b6b6b;margin-bottom:4px;">בונה</div>
+        <div style="font-size:20px;font-weight:800;color:#141838;margin-bottom:4px;">מגדלי הנמל</div>
+        <div style="font-size:12px;color:#6b6b6b;display:flex;align-items:center;gap:5px;margin-bottom:16px;"><span style="width:5px;height:5px;border-radius:50%;background:#ed7174;display:inline-block;"></span>רחוב הנמל, שדה דב</div>
+        <div style="display:flex;gap:24px;">
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">30</div><div style="font-size:10px;color:#6b6b6b;">קומות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">240</div><div style="font-size:10px;color:#6b6b6b;">יחידות</div></div>
+          <div><div style="font-size:20px;font-weight:800;color:#141838;">2028</div><div style="font-size:10px;color:#6b6b6b;">מסירה</div></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(20,24,56,0.07);padding-top:14px;">
+        <div style="display:flex;gap:6px;"><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">4–6 חדרים</span><span style="font-size:11px;padding:3px 10px;border-radius:12px;background:#f7f6f3;color:#6b6b6b;">נוף ים</span></div>
+        <div style="display:flex;align-items:center;gap:20px;"><span style="font-size:14px;font-weight:800;color:#141838;">3.6M ₪</span><span style="font-size:13px;font-weight:700;color:#ed7174;">פרטים ←</span></div>
+      </div>
+    </div>
+  </a>
+
+  <!-- AD -->
+  <div style="border-radius:12px;border:1.5px dashed rgba(20,24,56,0.1);background:#f7f6f3;height:90px;display:flex;align-items:center;justify-content:center;gap:12px;position:relative;">
+    <span style="position:absolute;top:10px;right:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(20,24,56,0.25);font-weight:600;">פרסומת</span>
+    <span style="font-size:12px;color:#ed7174;font-weight:600;opacity:0.7;">Banner Ad</span>
+    <span style="font-size:11px;color:rgba(20,24,56,0.3);">970 × 90</span>
+  </div>
+
+</div>
+
+
+<!-- ── LOAD MORE ── -->
+<div class="load-more-wrap">
+  <button class="load-more-btn">
+    <div class="load-more-dot"></div>
+    טען עוד פרויקטים
+    <div class="load-more-dot"></div>
+  </button>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-simple">
+    <div class="footer-copy">© CityPoint 2025. כל הזכויות שמורות.</div>
+    <div class="footer-districts">
+      <span>KiryatHamaslul<span style="color:#fac071;">.</span></span>
+      <span>Tzrifin<span style="color:#448bc9;">.</span></span>
+      <span>SdeDov<span style="color:#ed7174;">.</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setFilter(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active','coral'));
+  btn.classList.add('active','coral');
+}
+function setTab(btn) {
+  document.querySelectorAll('.status-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

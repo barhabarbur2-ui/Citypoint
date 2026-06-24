@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מה משתנה בשדה דב ב-2025 · SdeDov</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #141838;
+    --coral:  #ed7174;
+    --coral2: #f08888;
+    --off:    #f7f6f3;
+    --text:   #1d1d1b;
+    --muted:  #6b6b6b;
+    --border: rgba(20,24,56,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    color: var(--text);
+    background: #fff;
+    direction: rtl;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-logo { display: flex; align-items: center; gap: 16px; }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--coral); }
+  .back-arrow { font-size: 16px; }
+  .header-divider { width: 1px; height: 20px; background: var(--border); }
+  .header-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--coral);
+  }
+  .header-actions { display: flex; align-items: center; gap: 20px; }
+  .share-btn {
+    font-size: 13px; color: var(--muted);
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .share-btn:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .article-hero {
+    margin-top: 64px;
+    background: var(--navy);
+    padding: 72px 60px 60px;
+    position: relative; overflow: hidden;
+  }
+  .article-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(237,113,116,0.12) 0%, transparent 60%);
+  }
+  .hero-inner { max-width: 780px; margin: 0 auto; position: relative; }
+  .hero-tag-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+  .hero-category {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--coral);
+  }
+  .hero-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+  .hero-date { font-size: 12px; color: rgba(255,255,255,0.4); }
+  .article-hero h1 {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800; line-height: 1.25;
+    color: white; margin-bottom: 20px;
+  }
+  .article-hero h1 em { font-style: normal; color: var(--coral); }
+  .hero-desc {
+    font-size: 18px; font-weight: 300; line-height: 1.75;
+    color: rgba(255,255,255,0.65); margin-bottom: 32px;
+    max-width: 640px;
+  }
+  .hero-meta {
+    display: flex; align-items: center; gap: 20px;
+    font-size: 13px; color: rgba(255,255,255,0.4);
+  }
+  .author { display: flex; align-items: center; gap: 8px; }
+  .author-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(237,113,116,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--coral);
+  }
+  .author-name { color: rgba(255,255,255,0.7); font-weight: 500; }
+  .read-time { display: flex; align-items: center; gap: 6px; }
+  .read-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--coral); }
+
+  /* ── COVER IMAGE ── */
+  .cover-image {
+    max-width: 860px; margin: 0 auto;
+    height: 440px;
+    background: var(--off);
+    position: relative; overflow: hidden;
+    border-radius: 4px;
+  }
+  .cover-image-inner {
+    width: 100%; height: 100%;
+    background: #ccc;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .cover-image-inner img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .cover-label {
+    font-size: 13px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+  }
+  .cover-caption {
+    max-width: 860px; margin: 12px auto 0;
+    font-size: 12px; color: var(--muted); padding: 0 60px;
+    text-align: center;
+  }
+
+  /* ── LAYOUT ── */
+  .content-wrapper {
+    max-width: 860px; margin: 0 auto;
+    padding: 60px 60px 0;
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* ── ARTICLE BODY ── */
+  .article-body { min-width: 0; }
+  .article-body p {
+    font-size: 17px; line-height: 1.9;
+    color: #2a2a2a; margin-bottom: 24px;
+    font-weight: 400;
+  }
+  .article-body h2 {
+    font-size: 24px; font-weight: 800;
+    color: var(--navy); margin: 48px 0 16px;
+    line-height: 1.3;
+  }
+  .article-body h2::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%; background: var(--coral);
+    margin-left: 10px; vertical-align: middle;
+    margin-bottom: 2px;
+  }
+  .article-body h3 {
+    font-size: 19px; font-weight: 700;
+    color: var(--navy); margin: 32px 0 12px;
+  }
+  .pullquote {
+    border-right: 3px solid var(--coral);
+    padding: 20px 24px;
+    margin: 40px 0;
+    background: var(--off);
+    border-radius: 0 4px 4px 0;
+  }
+  .pullquote p {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    line-height: 1.6 !important;
+    color: var(--navy) !important;
+    margin: 0 !important;
+  }
+  .data-box {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 32px;
+    margin: 40px 0;
+    color: white;
+  }
+  .data-box-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--coral);
+    margin-bottom: 24px;
+  }
+  .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .data-item {}
+  .data-num { font-size: 36px; font-weight: 800; color: white; line-height: 1; }
+  .data-num span { font-size: 20px; color: var(--coral); }
+  .data-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; line-height: 1.4; }
+  .inline-img {
+    width: 100%; height: 260px;
+    background: linear-gradient(135deg, #e8d5c4 0%, #d4bba0 100%);
+    border-radius: 4px; margin: 32px 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .inline-img-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 1px; }
+  .dot-list { list-style: none; margin: 16px 0 24px; }
+  .dot-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 17px; line-height: 1.7; color: #2a2a2a;
+    margin-bottom: 10px;
+  }
+  .dot-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 7px; height: 7px;
+    border-radius: 50%; background: var(--coral);
+    margin-top: 9px;
+  }
+  .article-end {
+    display: flex; align-items: center; gap: 12px;
+    margin: 48px 0 60px;
+    color: var(--muted); font-size: 13px;
+  }
+  .article-end-line { flex: 1; height: 1px; background: var(--border); }
+  .end-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
+
+  /* ── ADS ── */
+  .ad-slot {
+    background: var(--off);
+    border: 1.5px dashed rgba(20,24,56,0.12);
+    border-radius: 6px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--muted); gap: 6px;
+    position: relative;
+  }
+  .ad-label {
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(20,24,56,0.25); font-weight: 600;
+    position: absolute; top: 8px; right: 12px;
+  }
+  .ad-size { font-size: 12px; color: rgba(20,24,56,0.3); font-family: 'Lexend Deca', sans-serif; }
+  .ad-type { font-size: 11px; color: var(--coral); font-weight: 600; opacity: 0.7; }
+
+  /* leaderboard under hero */
+  .ad-leaderboard { width: 100%; height: 90px; margin: 0; border-radius: 0; border-right: none; border-left: none; }
+
+  /* inline mid-article */
+  .ad-inline { width: 100%; height: 120px; margin: 32px 0; }
+
+  /* sidebar box */
+  .ad-sidebar { width: 100%; height: 250px; }
+
+  /* wide banner between sections */
+  .ad-banner-wrap { background: rgba(20,24,56,0.03); padding: 24px 60px; }
+  .ad-banner { max-width: 860px; margin: 0 auto; height: 100px; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { position: sticky; top: 84px; }
+  .sidebar-section { margin-bottom: 36px; }
+  .sidebar-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-list { list-style: none; }
+  .toc-list li { margin-bottom: 10px; }
+  .toc-list a {
+    font-size: 13px; color: var(--muted);
+    text-decoration: none; line-height: 1.5;
+    transition: color 0.2s; display: block;
+  }
+  .toc-list a:hover { color: var(--coral); }
+  .toc-list a.active { color: var(--navy); font-weight: 600; }
+  .related-card { margin-bottom: 16px; }
+  .related-card a {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    text-decoration: none; line-height: 1.5;
+    transition: color 0.2s; display: block;
+  }
+  .related-card a:hover { color: var(--coral); }
+  .related-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .share-section { padding: 20px; background: var(--off); border-radius: 8px; }
+  .share-label { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+  .share-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .share-pill {
+    font-size: 12px; padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--border); background: white;
+    cursor: pointer; transition: all 0.2s; color: var(--text);
+    text-decoration: none;
+  }
+  .share-pill:hover { border-color: var(--coral); color: var(--coral); }
+
+  /* ── MORE ARTICLES ── */
+  .more-articles {
+    background: var(--off);
+    padding: 60px;
+    margin-top: 60px;
+  }
+  .more-header {
+    max-width: 860px; margin: 0 auto 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .more-title { font-size: 22px; font-weight: 800; color: var(--navy); }
+  .more-title span { color: var(--coral); }
+  .more-link { font-size: 13px; color: var(--coral); text-decoration: none; }
+  .more-grid {
+    max-width: 860px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .more-card {
+    background: white; border-radius: 6px; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .more-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .more-card-img {
+    height: 160px;
+    overflow: hidden;
+  }
+  .more-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+  .more-card:hover .more-card-img img { transform: scale(1.04); }
+  .more-card-body { padding: 16px; }
+  .more-card-tag { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--coral); margin-bottom: 8px; }
+  .more-card-title { font-size: 14px; font-weight: 700; line-height: 1.5; color: var(--navy); margin-bottom: 8px; }
+  .more-card-meta { font-size: 11px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 28px 60px;
+  }
+  .footer-bottom-simple {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); }
+  .footer-districts { display: flex; align-items: center; gap: 24px; opacity: 0.6; }
+@media (max-width: 600px) {
+  header { padding: 0 16px; height: 60px; }
+  .header-cta { display: none; }
+  nav { display: none; }
+  .header-cta { display: none; }
+  .header-divider { display: none; }
+  .header-tag { display: none; }
+  .article-hero { padding: 80px 16px 32px; }
+  .article-hero h1 { font-size: 26px; line-height: 1.3; }
+  .article-meta { flex-wrap: wrap; gap: 8px; font-size: 12px; }
+  .cover-image { height: 220px; border-radius: 8px; margin: 0 16px; }
+  .cover-caption { padding: 0 16px; }
+  .content-wrapper { grid-template-columns: 1fr; gap: 0; padding: 24px 16px 0; }
+  .sidebar { display: none; }
+  .article-body p { font-size: 15px; line-height: 1.8; }
+  .article-body h2 { font-size: 20px; margin: 32px 0 12px; }
+  .article-body h3 { font-size: 17px; }
+  .pullquote p { font-size: 17px !important; }
+  .ad-leaderboard { display: none; }
+  .more-articles { padding: 32px 16px 48px; }
+  .more-grid { grid-template-columns: 1fr; gap: 16px; }
+  footer { padding: 28px 16px; }
+  .footer-simple { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-districts { flex-wrap: wrap; justify-content: center; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-logo">
+    <a href="index.html" class="back-link">
+      <span class="back-arrow">→</span>
+      חזרה לשדה דב
+    </a>
+    <div class="header-divider"></div>
+    <div class="header-tag">עדכוני עיר</div>
+  </div>
+  <div class="header-actions">
+    <button class="share-btn">שיתוף ↗</button>
+  </div>
+  <a href="index.html" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;text-decoration:none;opacity:0.85;" title="דף הבית">
+    <svg width="30" height="29" viewBox="0 0 128.55 122.64" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);">
+      <path fill="#141838" d="M104.36,42.89c-5.64,2.57-9.01,8.31-8.87,14.51.02.7.02,1.4,0,2.11.15,6.58-1.11,12.51-3.79,17.79-2.68,5.28-6.39,9.41-11.13,12.4-4.75,2.98-10.1,4.48-16.07,4.48s-11.56-1.49-16.3-4.48c-4.75-2.98-8.49-7.12-11.25-12.4-2.75-5.28-4.06-11.21-3.9-17.79-.15-6.73,1.15-12.7,3.9-17.91,2.75-5.2,6.5-9.33,11.25-12.4.86-.56,1.75-1.06,2.66-1.52,4.92-2.45,7.77-7.74,7.4-13.23h0c-.69-10.22-11.21-16.91-20.67-12.97-2.15.89-4.24,1.91-6.26,3.04-9.72,5.43-17.37,12.89-22.96,22.38C2.79,36.41,0,47.27,0,59.51s2.79,23.11,8.38,32.6c5.59,9.49,13.24,16.95,22.96,22.38,9.72,5.43,20.77,8.15,33.17,8.15s23.22-2.72,32.94-8.15c9.72-5.43,17.33-12.89,22.84-22.38,5.51-9.49,8.26-20.35,8.26-32.6,0-.46,0-.92-.01-1.38-.21-12.3-12.98-20.34-24.17-15.25h0Z"/>
+      <circle fill="#ed7174" cx="87.51" cy="20.12" r="20.12"/>
+    </svg>
+  </a>
+</header>
+
+<!-- ── HERO ── -->
+<div class="article-hero">
+  <div class="hero-inner">
+    <div class="hero-tag-row">
+      <div class="hero-category">עדכוני עיר</div>
+      <div class="hero-dot"></div>
+      <div class="hero-date">15 ביוני 2025</div>
+    </div>
+    <h1>מה משתנה בשדה דב ב-2025?<br><em>כל מה שצריך לדעת</em></h1>
+    <p class="hero-desc">תוכנית האב, הפרויקטים הגדולים, מה כבר בנייה ומה עוד בדרך — סקירה מקיפה של המחתם שמשנה את מפת תל אביב.</p>
+    <div class="hero-meta">
+      <div class="author">
+        <div class="author-avatar">מ</div>
+        <span class="author-name">מערכת שדה דב</span>
+      </div>
+      <div class="read-time">
+        <div class="read-dot"></div>
+        5 דקות קריאה
+      </div>
+      <div class="read-time">
+        <div class="read-dot"></div>
+        עודכן לאחרונה: יוני 2025
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COVER IMAGE ── -->
+<div style="background: var(--navy); padding-bottom: 0;">
+  <div class="cover-image">
+    <div class="cover-image-inner">
+      <img src="CityPoint/sdedov.png" alt="שדה דב 2025" />
+    </div>
+  </div>
+</div>
+<p class="cover-caption">הדמיית אווירה של שדה דב המחודש — מתחם עירוני חדש בלב תל אביב</p>
+
+<!-- AD: Leaderboard -->
+<div class="ad-slot ad-leaderboard">
+  <span class="ad-label">פרסומת</span>
+  <span class="ad-type">Leaderboard Banner</span>
+  <span class="ad-size">728 × 90</span>
+</div>
+
+<!-- ── CONTENT ── -->
+<div class="content-wrapper">
+  <article class="article-body">
+
+    <p>שדה דב הוא אחד הפרויקטים הגדולים ביותר שנבנים כיום בישראל — מחתם עירוני חדש שצומח על שטח בסיס חיל האוויר לשעבר, בצפון תל אביב. בשנת 2025 מגיע הפרויקט לנקודת מפנה: כלי הכבדות כבר עובדים, הדירות הראשונות מסתמנות באופק, ותוכנית האב מתחילה לקבל צורה מוחשית.</p>
+
+    <p>אבל מה בדיוק קורה שם? מה כבר אושר, מה בנייה פעילה, ומה עוד מחכה לאישורים? ריכזנו עבורכם את כל מה שצריך לדעת על שדה דב של 2025.</p>
+
+    <!-- AD: Inline mid-article -->
+    <div class="ad-slot ad-inline">
+      <span class="ad-label">פרסומת</span>
+      <span class="ad-type">Native / Display Inline</span>
+      <span class="ad-size">728 × 120</span>
+    </div>
+
+    <div class="data-box">
+      <div class="data-box-title">שדה דב במספרים · 2025</div>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="data-num">16,000<span>+</span></div>
+          <div class="data-label">יחידות דיור מתוכננות בסך הכל</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">3,400</div>
+          <div class="data-label">יחידות בשלב בנייה פעיל כיום</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">2027</div>
+          <div class="data-label">שנת מסירה של הפרויקטים הראשונים</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="master-plan">תוכנית האב — מה אושר?</h2>
+
+    <p>תוכנית האב לשדה דב (תב"ע 2650) אושרה בוועדה המחוזית בסוף 2023 ועברה לשלב הביצוע. התוכנית מגדירה עיר בתוך עיר: שכונות מגורים, מרכז מסחרי, מוסדות ציבור, פארק ימי ורצועת חוף נגישה לציבור.</p>
+
+    <div class="pullquote">
+      <p>"שדה דב לא מתוכנן להיות שכונת פרברים — הוא מתוכנן להיות מרכז עירוני חי, עם רחובות שאפשר להליכה, תחבורה ציבורית וחיי קהילה אמיתיים."</p>
+    </div>
+
+    <p>המרכיבים העיקריים שאושרו כוללים:</p>
+
+    <ul class="dot-list">
+      <li>6 שכונות מגורים שונות עם אופי אדריכלי ייחודי לכל אחת</li>
+      <li>מרכז עסקים ומסחר בשטח של כ-120,000 מ"ר</li>
+      <li>רצועת חוף ציבורית של 1.5 ק"מ עם פרומנד</li>
+      <li>תחנת מטרו עתידית (קו M1) בלב המחתם</li>
+      <li>בית ספר, גני ילדים ומוסדות ציבור לכ-40,000 תושבים</li>
+    </ul>
+
+    <h2 id="active">מה בנייה פעילה עכשיו?</h2>
+
+    <p>נכון ליוני 2025, מספר פרויקטים נמצאים בבנייה פעילה או בשלב מתקדם של היתרים. אלה הפרויקטים שהכי מתקדמים:</p>
+
+    <h3>מגדל שדה דב A — דימרי</h3>
+    <p>המגדל הראשון שמסתמן ברקיע — 38 קומות, 320 יחידות דיור. הבנייה החלה ב-2024 ומסירה צפויה לסוף 2027. המחירים נעים בין 3.2 מיליון ₪ לדירת 3 חדרים ועד 8.5 מיליון ₪ לפנטהאוז.</p>
+
+    <div class="inline-img">
+      <span class="inline-img-label">הדמיית מגדל שדה דב A</span>
+    </div>
+
+    <h3>כפר שדה דב — בוטיק שכונתי</h3>
+    <p>פרויקט בן 6 בניינים בגובה בינוני, 4-8 קומות, עם דגש על חצרות משותפות וחיי קהילה. 280 יחידות, מסירה מתוכננת לתחילת 2028.</p>
+
+    <h2 id="future">מה עוד בדרך?</h2>
+
+    <p>מעבר לבנייה הפעילה, יש מספר פיתוחים שיעצבו את שדה דב בשנים הקרובות:</p>
+
+    <ul class="dot-list">
+      <li><strong>קו המטרו M1</strong> — תחנת שדה דב צפויה לפתוח ב-2032, שתחבר את המחתם לתל אביב ב-8 דקות</li>
+      <li><strong>הפרומנד הימי</strong> — רצועת החוף הציבורית תפתח בשלבים, הראשון ב-2026</li>
+      <li><strong>המרכז המסחרי</strong> — מתוכנן לפתוח שלב ראשון ב-2028 עם 40,000 מ"ר מסחר ואנטרטיינמנט</li>
+      <li><strong>פארק העיר</strong> — 12 דונם של ירוק בלב המחתם, תכנון בשלב סופי</li>
+    </ul>
+
+    <div class="article-end">
+      <div class="article-end-line"></div>
+      <div class="end-dot"></div>
+      <div class="article-end-line"></div>
+    </div>
+
+  </article>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">תוכן עניינים</div>
+      <ul class="toc-list">
+        <li><a href="#master-plan" class="active">תוכנית האב</a></li>
+        <li><a href="#active">בנייה פעילה</a></li>
+        <li><a href="#future">מה עוד בדרך</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">קריאה נוספת</div>
+      <div class="related-card">
+        <a href="#">פרויקטי מגורים חדשים שכדאי לעקוב אחריהם</a>
+        <div class="related-meta">פרויקטים · 8 דקות קריאה</div>
+      </div>
+      <div class="related-card">
+        <a href="#">איך שדה דב הופך למרכז עירוני חדש</a>
+        <div class="related-meta">עיר ואדריכלות · 6 דקות קריאה</div>
+      </div>
+      <div class="related-card">
+        <a href="#">מדריך המשקיע לשדה דב 2025</a>
+        <div class="related-meta">מדריכי השקעה · 12 דקות קריאה</div>
+      </div>
+    </div>
+
+    <!-- AD: Sidebar Box -->
+    <div class="sidebar-section">
+      <div class="ad-slot ad-sidebar">
+        <span class="ad-label">פרסומת</span>
+        <span class="ad-type">Sidebar Box</span>
+        <span class="ad-size">300 × 250</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="share-section">
+        <div class="share-label">שתפו את הכתבה</div>
+        <div class="share-btns">
+          <a href="#" class="share-pill">WhatsApp</a>
+          <a href="#" class="share-pill">Facebook</a>
+          <a href="#" class="share-pill">העתק קישור</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- AD: Wide banner between article and more -->
+<div class="ad-banner-wrap">
+  <div class="ad-slot ad-banner">
+    <span class="ad-label">פרסומת</span>
+    <span class="ad-type">Billboard / Takeover Banner</span>
+    <span class="ad-size">970 × 100</span>
+  </div>
+</div>
+
+<!-- ── MORE ARTICLES ── -->
+<div class="more-articles">
+  <div class="more-header">
+    <div class="more-title">עוד מ<span>שדה דב</span><span style="color:var(--coral);">.</span></div>
+    <a href="sdedov_demo.html#articles" class="more-link">כל הכתבות ←</a>
+  </div>
+  <div class="more-grid">
+    <div class="more-card">
+      <div class="more-card-img">
+        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="פרויקטים" />
+      </div>
+      <div class="more-card-body">
+        <div class="more-card-tag">פרויקטים</div>
+        <div class="more-card-title">פרויקטי מגורים חדשים שכדאי לעקוב אחריהם</div>
+        <div class="more-card-meta">8 ביוני 2025 · 8 דקות קריאה</div>
+      </div>
+    </div>
+    <div class="more-card">
+      <div class="more-card-img">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80" alt="עיר" />
+      </div>
+      <div class="more-card-body">
+        <div class="more-card-tag">עיר ואדריכלות</div>
+        <div class="more-card-title">איך שדה דב הופך למרכז עירוני חדש</div>
+        <div class="more-card-meta">2 ביוני 2025 · 6 דקות קריאה</div>
+      </div>
+    </div>
+    <div class="more-card">
+      <div class="more-card-img">
+        <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&q=80" alt="השקעה" />
+      </div>
+      <div class="more-card-body">
+        <div class="more-card-tag">מדריכי השקעה</div>
+        <div class="more-card-title">מדריך המשקיע לשדה דב — כל מה שצריך לדעת לפני שקונים</div>
+        <div class="more-card-meta">28 במאי 2025 · 12 דקות קריאה</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-bottom-simple">
+    <div class="footer-copy">© CityPoint 2025. כל הזכויות שמורות.</div>
+    <div class="footer-districts" style="display:flex;align-items:center;gap:20px;opacity:0.5;font-size:12px;color:white;font-family:'Lexend Deca',sans-serif;">
+      <span>KiryatHamaslul<span style="color:#fac071;">.</span></span>
+      <span>Tzrifin<span style="color:#448bc9;">.</span></span>
+      <span>SdeDov<span style="color:#ed7174;">.</span></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
