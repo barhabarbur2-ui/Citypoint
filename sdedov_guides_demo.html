@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריכים · SdeDov</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:  #141838;
+    --coral: #ed7174;
+    --off:   #f7f6f3;
+    --text:  #1d1d1b;
+    --muted: #6b6b6b;
+    --border: rgba(20,24,56,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Heebo', sans-serif; color: var(--text); background: #fff; direction: rtl; }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .back-link { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .back-link:hover { color: var(--coral); }
+
+  /* ── HERO ── */
+  .page-hero {
+    margin-top: 64px; background: var(--navy);
+    padding: 56px 60px 0; position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 60%, rgba(237,113,116,0.12) 0%, transparent 55%);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .hero-top { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 48px; gap: 40px; }
+  .page-hero h1 { font-size: 42px; font-weight: 800; color: white; line-height: 1.2; }
+  .page-hero h1 span { color: var(--coral); }
+  .page-hero-sub { font-size: 15px; color: rgba(255,255,255,0.45); margin-top: 10px; font-weight: 300; }
+  .hero-stats { display: flex; gap: 32px; flex-shrink: 0; }
+  .hero-stat-num { font-size: 28px; font-weight: 800; color: white; line-height: 1; }
+  .hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+  .hero-bottom-bar {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 20px 0;
+  }
+
+  /* ── FILTER TABS ── */
+  .filter-tabs-wrap {
+    background: white; border-bottom: 1px solid var(--border);
+    padding: 0 60px; position: sticky; top: 64px; z-index: 90;
+  }
+  .filter-tabs-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; gap: 8px; padding: 14px 0; overflow-x: auto;
+  }
+  .tab-pill {
+    padding: 7px 18px; border-radius: 20px; border: 1.5px solid var(--border);
+    background: white; font-family: 'Heebo', sans-serif;
+    font-size: 13px; color: var(--muted); cursor: pointer; transition: all 0.18s;
+    white-space: nowrap; font-weight: 500;
+  }
+  .tab-pill:hover { border-color: var(--coral); color: var(--coral); }
+  .tab-pill.active { background: var(--navy); border-color: var(--navy); color: white; font-weight: 600; }
+
+  /* ── GUIDES GRID ── */
+  .guides-wrap {
+    max-width: 1100px; margin: 48px auto 80px; padding: 0 60px;
+  }
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ── GUIDE CARD ── */
+  .guide-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .guide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(20,24,56,0.1);
+  }
+  .guide-badge {
+    display: inline-block; padding: 4px 12px;
+    border-radius: 20px; font-size: 11px; font-weight: 700;
+    width: fit-content;
+  }
+  .badge-purchase  { background: rgba(237,113,116,0.12); color: var(--coral); }
+  .badge-finance   { background: rgba(76,175,80,0.12);  color: #4caf50; }
+  .badge-legal     { background: rgba(91,143,212,0.12); color: #5b8fd4; }
+  .badge-market    { background: rgba(139,92,246,0.12); color: #8b5cf6; }
+  .badge-invest    { background: rgba(240,136,23,0.12); color: #f08817; }
+
+  .guide-title {
+    font-size: 18px; font-weight: 800; color: var(--navy); line-height: 1.35;
+  }
+  .guide-desc {
+    font-size: 13px; color: var(--muted); line-height: 1.7; flex: 1;
+  }
+  .guide-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .guide-time {
+    font-size: 11px; color: rgba(20,24,56,0.35); font-weight: 500;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .guide-time::before {
+    content: ''; display: inline-block; width: 12px; height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b6b6b' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+    background-size: contain; background-repeat: no-repeat; opacity: 0.5;
+  }
+  .guide-cta {
+    font-size: 13px; font-weight: 700; color: var(--coral);
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .guide-cta:hover { opacity: 0.75; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--navy); padding: 28px 60px; }
+  .footer-simple { display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); }
+  .footer-districts { display: flex; align-items: center; gap: 20px; font-size: 12px; color: rgba(255,255,255,0.5); font-family: 'Lexend Deca', sans-serif; }
+
+  /* ── HAMBURGER MOBILE MENU ── */
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 34px; height: 34px; cursor: pointer;
+    background: none; border: none; padding: 4px; z-index: 201; position: relative;
+  }
+  .hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--navy, #141838); border-radius: 2px;
+  }
+  .mobile-menu {
+    display: none; position: fixed;
+    top: 56px; left: 12px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(20,24,56,0.15);
+    z-index: 200;
+    flex-direction: column;
+    padding: 8px 0;
+    min-width: 180px;
+    border: 1px solid rgba(20,24,56,0.07);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 15px; font-weight: 500; color: var(--navy, #141838);
+    text-decoration: none; font-family: 'Heebo', sans-serif;
+    padding: 12px 20px;
+  }
+  .mobile-menu a:hover { background: rgba(20,24,56,0.04); }
+  .mobile-menu a.active { color: var(--coral, #ed7174); font-weight: 700; }
+  .mobile-menu .mobile-cta {
+    margin: 8px 12px 4px;
+    background: var(--coral, #ed7174); color: white !important;
+    padding: 11px 20px; border-radius: 24px;
+    font-size: 14px; font-weight: 700; text-align: center;
+  }
+  .mobile-menu .mobile-cta:hover { background: #d9595c; }
+  .mobile-menu-divider {
+    height: 1px; background: rgba(20,24,56,0.07); margin: 4px 0;
+  }
+  @media (max-width: 700px) {
+    .hamburger { display: flex; position: absolute; left: 16px; }
+    header nav, header > div > nav { display: none !important; }
+    header > div > a[style*="background"] { display: none !important; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .guides-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    header { padding: 0 16px; height: 60px; }
+    .page-hero { padding: 20px 16px 0; margin-top: 60px; }
+    .hero-top { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 24px; }
+    .page-hero h1 { font-size: 26px; }
+    .page-hero-sub { font-size: 13px; margin-top: 6px; }
+    .hero-stats { gap: 20px; }
+    .hero-stat-num { font-size: 22px; }
+    .hero-stat-label { font-size: 10px; }
+    .filter-tabs-wrap { padding: 0; }
+    .filter-tabs-inner { padding: 12px 16px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    .tab-pill { white-space: nowrap; flex-shrink: 0; font-size: 12px; padding: 6px 14px; }
+    .guides-wrap { padding: 0 16px; margin-top: 28px; }
+    .guides-grid { grid-template-columns: 1fr; gap: 16px; }
+    footer { padding: 28px 16px; }
+    .footer-simple { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-districts { flex-wrap: wrap; justify-content: center; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <button class="hamburger" onclick="var m=document.getElementById('mobileMenu');m.classList.toggle('open');event.stopPropagation();" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html#articles">חדשות</a>
+    <a href="sdedov_projects_demo.html">פרויקטים</a>
+    <a href="sdedov_guides_demo.html" class="active">מדריכים</a>
+    <a href="index.html#map">מפת האזור</a>
+    <div class="mobile-menu-divider"></div>
+    <a href="index.html#lead" class="mobile-cta">קבלו עדכונים</a>
+  </div>
+  <a href="index.html" style="font-size:13px;color:var(--muted,#888);text-decoration:none;font-weight:500;">חזרה לשדה דב →</a>
+  <a href="index.html" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;text-decoration:none;opacity:0.85;" title="דף הבית">
+    <svg width="30" height="29" viewBox="0 0 128.55 122.64" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);">
+      <path fill="#141838" d="M104.36,42.89c-5.64,2.57-9.01,8.31-8.87,14.51.02.7.02,1.4,0,2.11.15,6.58-1.11,12.51-3.79,17.79-2.68,5.28-6.39,9.41-11.13,12.4-4.75,2.98-10.1,4.48-16.07,4.48s-11.56-1.49-16.3-4.48c-4.75-2.98-8.49-7.12-11.25-12.4-2.75-5.28-4.06-11.21-3.9-17.79-.15-6.73,1.15-12.7,3.9-17.91,2.75-5.2,6.5-9.33,11.25-12.4.86-.56,1.75-1.06,2.66-1.52,4.92-2.45,7.77-7.74,7.4-13.23h0c-.69-10.22-11.21-16.91-20.67-12.97-2.15.89-4.24,1.91-6.26,3.04-9.72,5.43-17.37,12.89-22.96,22.38C2.79,36.41,0,47.27,0,59.51s2.79,23.11,8.38,32.6c5.59,9.49,13.24,16.95,22.96,22.38,9.72,5.43,20.77,8.15,33.17,8.15s23.22-2.72,32.94-8.15c9.72-5.43,17.33-12.89,22.84-22.38,5.51-9.49,8.26-20.35,8.26-32.6,0-.46,0-.92-.01-1.38-.21-12.3-12.98-20.34-24.17-15.25h0Z"/>
+      <circle fill="#ed7174" cx="87.51" cy="20.12" r="20.12"/>
+    </svg>
+  </a>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <nav style="display:flex;align-items:center;font-size:13px;font-weight:500;">
+      <a href="index.html#articles" style="color:var(--muted,#888);text-decoration:none;">חדשות</a>
+      <span style="margin:0 8px;color:var(--coral,#ed7174);">·</span>
+      <a href="sdedov_projects_demo.html" style="color:var(--muted,#888);text-decoration:none;">פרויקטים</a>
+      <span style="margin:0 8px;color:var(--coral,#ed7174);">·</span>
+      <a href="sdedov_guides_demo.html" style="color:var(--coral,#ed7174);text-decoration:none;font-weight:600;">מדריכים</a>
+      <span style="margin:0 8px;color:var(--coral,#ed7174);">·</span>
+      <a href="index.html#map" style="color:var(--muted,#888);text-decoration:none;">מפת האזור</a>
+    </nav>
+    <a href="index.html#lead" style="background:var(--coral,#ed7174);color:white;font-family:'Heebo',sans-serif;font-size:13px;font-weight:600;padding:10px 22px;border-radius:24px;text-decoration:none;display:flex;align-items:center;gap:7px;">
+      <span style="width:5px;height:5px;background:rgba(255,255,255,0.7);border-radius:50%;display:inline-block;"></span>
+      קבלו עדכונים
+    </a>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <h1>מדריכים לרוכש <span>החכם</span></h1>
+        <p class="page-hero-sub">כל מה שצריך לדעת לפני שקונים בשדה דב</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">12</div>
+          <div class="hero-stat-label">מדריכים</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">8</div>
+          <div class="hero-stat-label">נושאים</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;padding-top:6px;">עדכון שוטף</div>
+          <div class="hero-stat-label">תוכן מעודכן</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-bottom-bar"></div>
+  </div>
+</div>
+
+<!-- ── FILTER TABS ── -->
+<div class="filter-tabs-wrap">
+  <div class="filter-tabs-inner">
+    <button class="tab-pill active" onclick="setTab(this,'all')">הכל</button>
+    <button class="tab-pill" onclick="setTab(this,'purchase')">רכישה</button>
+    <button class="tab-pill" onclick="setTab(this,'finance')">מימון</button>
+    <button class="tab-pill" onclick="setTab(this,'legal')">משפטי</button>
+    <button class="tab-pill" onclick="setTab(this,'invest')">השקעות</button>
+    <button class="tab-pill" onclick="setTab(this,'market')">שוק</button>
+  </div>
+</div>
+
+<!-- ── GUIDES GRID ── -->
+<div class="guides-wrap">
+  <div class="guides-grid" id="guidesGrid">
+
+    <!-- 1 -->
+    <div class="guide-card" data-cat="purchase">
+      <span class="guide-badge badge-purchase">רכישה</span>
+      <div class="guide-title">איך קונים דירה בשדה דב</div>
+      <div class="guide-desc">מדריך שלב אחרי שלב לרכישת דירה חדשה מקבלן באזור שדה דב — מהחיפוש הראשון ועד מסירת המפתח.</div>
+      <div class="guide-footer">
+        <span class="guide-time">קריאה של 8 דקות</span>
+        <a href="#" class="guide-cta">לקריאה ←</a>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="guide-card" data-cat="legal">
+      <span class="guide-badge badge-legal">משפטי</span>
+      <div class="guide-title">מה זה תמ"א 38 ואיך זה משפיע עליך</div>
+      <div class="guide-desc">הסבר מקיף על תוכנית ההתחדשות העירונית ומה המשמעות לרוכשים — זכויות בנייה, פינוי-בינוי ומה לבדוק.</div>
+      <div class="guide-footer">
+        <span class="guide-time">קריאה של 6 דקות</span>
+        <a href="#" class="guide-cta">לקריאה ←</a>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="guide-card" data-cat="finance">
+      <span class="guide-badge badge-finance">מימון</span>
+      <div class="guide-title">מדריך למשכנתא 2025</div>
+      <div class="guide-desc">כל מה שצריך לדעת על לקיחת משכנתא בשוק הנוכחי — ריבית, מסלולים, כושר החזר ואיך לבחור נכון.</div>
+      <div class="guide-footer">
+        <span class="guide-time">קריאה של 10 דקות</span>
+        <a href="#" class="guide-cta">לקריאה ←</a>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="guide-card" data-cat="market">
+      <span class="guide-badge badge-market">שוק</span>
+      <div class="guide-title">השוואת פרויקטים באזור</div>
+      <div class="guide-desc">ניתוח השוואתי בין הפרויקטים הפעילים בשדה דב — מחירים, מיקום, לוחות זמנים ויתרונות כל פרויקט.</div>
+      <div class="guide-footer">
+        <span class="guide-time">קריאה של 7 דקות</span>
+        <a href="#" class="guide-cta">לקריאה ←</a>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="guide-card" data-cat="invest">
+      <span class="guide-badge badge-invest">השקעות</span>
+      <div class="guide-title">מדריך למשקיע המתחיל</div>
+      <div class="guide-desc">איך לבחור נכון, מה לבדוק לפני רכישה להשקעה ומה להימנע ממנו — כלים פרקטיים לקבלת החלטה מושכלת.</div>
+      <div class="guide-footer">
+        <span class="guide-time">קריאה של 12 דקות</span>
+        <a href="#" class="guide-cta">לקריאה ←</a>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="guide-card" data-cat="legal">
+      <span class="guide-badge badge-legal">משפטי</span>
+      <div class="guide-title">זכויות הרוכש מול הקבלן</div>
+      <div class="guide-desc">חוזה, בדק בית, ליקויים ואחריות — מה מגיע לכם על פי חוק ואיך לעמוד על זכויותיכם מול הקבלן.</div>
+      <div class="guide-footer">
+        <span class="guide-time">קריאה של 9 דקות</span>
+        <a href="#" class="guide-cta">לקריאה ←</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-simple">
+    <div class="footer-copy">© CityPoint 2025. כל הזכויות שמורות.</div>
+    <div class="footer-districts">
+      <span>KiryatHamaslul<span style="color:#fac071;">.</span></span>
+      <span>Tzrifin<span style="color:#448bc9;">.</span></span>
+      <span>SdeDov<span style="color:#ed7174;">.</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setTab(btn, cat) {
+  document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  var cards = document.querySelectorAll('.guide-card');
+  cards.forEach(function(card) {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('mobileMenu');
+  if (menu && !menu.contains(e.target) && !e.target.closest('.hamburger')) {
+    menu.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
