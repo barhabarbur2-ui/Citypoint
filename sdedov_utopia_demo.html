@@ -263,12 +263,62 @@
   .footer-simple { flex-direction: column; gap: 12px; text-align: center; }
   .footer-districts { flex-wrap: wrap; justify-content: center; gap: 12px; }
 }
+
+/* ── HAMBURGER MOBILE MENU ── */
+.hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 36px; height: 36px; cursor: pointer;
+  background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--navy, #141838); border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.mobile-menu {
+  display: none; position: fixed; top: 0; right: 0; left: 0; bottom: 0;
+  background: rgba(255,255,255,0.98); backdrop-filter: blur(16px);
+  z-index: 200; flex-direction: column; align-items: center; justify-content: center;
+  gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 22px; font-weight: 600; color: var(--navy, #141838);
+  text-decoration: none; font-family: 'Heebo', sans-serif;
+}
+.mobile-menu a.active { color: var(--coral, #ed7174); }
+.mobile-menu .mobile-cta {
+  margin-top: 8px; background: var(--coral, #ed7174); color: white;
+  padding: 14px 36px; border-radius: 30px; font-size: 16px; font-weight: 700;
+}
+.mobile-close {
+  position: absolute; top: 20px; left: 20px;
+  background: none; border: none; font-size: 28px; cursor: pointer;
+  color: var(--navy, #141838); line-height: 1; font-family: 'Heebo', sans-serif;
+}
+@media (max-width: 700px) {
+  .hamburger { display: flex; }
+  header nav, header > div > nav { display: none !important; }
+  header .btn-cta, header > div > a.btn-cta { display: none !important; }
+}
 </style>
 </head>
 <body>
 
 <!-- ── HEADER ── -->
 <header id="header" class="scrolled">
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="mobileMenu" class="mobile-menu">
+    <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
+    <a href="index.html#articles">חדשות</a>
+    <a href="sdedov_projects_demo.html">פרויקטים</a>
+    <a href="index.html#guides">מדריכים</a>
+    <a href="index.html#map">מפת האזור</a>
+    <a href="index.html#lead" class="mobile-cta">קבלו עדכונים</a>
+  </div>
   <a href="sdedov_projects_demo.html" style="font-size:13px;color:var(--muted,#888);text-decoration:none;font-weight:500;">כל הפרויקטים →</a>
   <a href="index.html" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;text-decoration:none;opacity:0.85;" title="דף הבית">
     <svg width="30" height="29" viewBox="0 0 128.55 122.64" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);">
