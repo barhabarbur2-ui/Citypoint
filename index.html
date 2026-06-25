@@ -785,9 +785,11 @@ footer {
   height: 1px; background: rgba(20,24,56,0.07); margin: 4px 0;
 }
 @media (max-width: 700px) {
-  .hamburger { display: flex; }
+  .hamburger { display: flex; position: absolute; left: 16px; }
+  .header-logo { position: absolute; right: 16px; }
+  .header-logo svg { height: 18px !important; }
   header nav, header > div > nav { display: none !important; }
-  header .btn-cta, header > div > a.btn-cta { display: none !important; }
+  header > div > a[style*="background"] { display: none !important; }
 }
 </style>
 </head>
@@ -799,15 +801,15 @@ footer {
     <span></span><span></span><span></span>
   </button>
   <div id="mobileMenu" class="mobile-menu">
-    <a href="index.html#articles">חדשות</a>
+    <a href="#articles">חדשות</a>
     <a href="sdedov_projects_demo.html">פרויקטים</a>
-    <a href="index.html#guides">מדריכים</a>
-    <a href="index.html#map">מפת האזור</a>
+    <a href="#guides">מדריכים</a>
+    <a href="#map">מפת האזור</a>
     <div class="mobile-menu-divider"></div>
-    <a href="index.html#lead" class="mobile-cta">קבלו עדכונים</a>
+    <a href="#lead" class="mobile-cta">קבלו עדכונים</a>
   </div>
-  <div class="header-logo">
-    <svg style="height:28px;width:auto;display:block;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 346.64 103.85">
+  <div class="header-logo" style="display:flex;align-items:center;">
+    <svg style="height:26px;width:auto;display:block;" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 346.64 103.85">
   <g id="Layer_1-2" data-name="Layer 1">
     <g>
       <g>
@@ -846,14 +848,12 @@ footer {
   </g>
 </svg>
   </div>
-
-  <a href="index.html" class="header-icon" title="דף הבית">
-    <svg width="32" height="31" viewBox="0 0 128.55 122.64" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);">
+  <a href="index.html" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;text-decoration:none;opacity:0.85;" title="דף הבית">
+    <svg width="30" height="29" viewBox="0 0 128.55 122.64" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);">
       <path fill="#141838" d="M104.36,42.89c-5.64,2.57-9.01,8.31-8.87,14.51.02.7.02,1.4,0,2.11.15,6.58-1.11,12.51-3.79,17.79-2.68,5.28-6.39,9.41-11.13,12.4-4.75,2.98-10.1,4.48-16.07,4.48s-11.56-1.49-16.3-4.48c-4.75-2.98-8.49-7.12-11.25-12.4-2.75-5.28-4.06-11.21-3.9-17.79-.15-6.73,1.15-12.7,3.9-17.91,2.75-5.2,6.5-9.33,11.25-12.4.86-.56,1.75-1.06,2.66-1.52,4.92-2.45,7.77-7.74,7.4-13.23h0c-.69-10.22-11.21-16.91-20.67-12.97-2.15.89-4.24,1.91-6.26,3.04-9.72,5.43-17.37,12.89-22.96,22.38C2.79,36.41,0,47.27,0,59.51s2.79,23.11,8.38,32.6c5.59,9.49,13.24,16.95,22.96,22.38,9.72,5.43,20.77,8.15,33.17,8.15s23.22-2.72,32.94-8.15c9.72-5.43,17.33-12.89,22.84-22.38,5.51-9.49,8.26-20.35,8.26-32.6,0-.46,0-.92-.01-1.38-.21-12.3-12.98-20.34-24.17-15.25h0Z"/>
       <circle fill="#ed7174" cx="87.51" cy="20.12" r="20.12"/>
     </svg>
   </a>
-
   <div style="display:flex;align-items:center;gap:16px;">
     <nav style="display:flex;align-items:center;font-size:13px;font-weight:500;">
       <a href="#articles" style="color:var(--muted);text-decoration:none;">חדשות</a>
@@ -864,8 +864,8 @@ footer {
       <span style="margin:0 8px;color:var(--coral);">·</span>
       <a href="#map" style="color:var(--muted);text-decoration:none;">מפת האזור</a>
     </nav>
-    <a href="#lead" class="btn-cta">
-      <span class="btn-dot"></span>
+    <a href="#lead" style="background:var(--coral);color:white;font-family:'Heebo',sans-serif;font-size:13px;font-weight:600;padding:10px 22px;border-radius:24px;text-decoration:none;display:flex;align-items:center;gap:7px;">
+      <span style="width:5px;height:5px;background:rgba(255,255,255,0.7);border-radius:50%;display:inline-block;"></span>
       קבלו עדכונים
     </a>
   </div>

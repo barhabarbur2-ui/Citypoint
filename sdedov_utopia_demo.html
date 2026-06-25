@@ -306,9 +306,10 @@
   height: 1px; background: rgba(20,24,56,0.07); margin: 4px 0;
 }
 @media (max-width: 700px) {
-  .hamburger { display: flex; }
+  .hamburger { display: flex; position: absolute; left: 16px; }
   header nav, header > div > nav { display: none !important; }
-  header .btn-cta, header > div > a.btn-cta { display: none !important; }
+  header > div > a[style*="background"] { display: none !important; }
+  .back-link-mobile-hide { display: none; }
 }
 </style>
 </head>
