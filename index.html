@@ -747,34 +747,42 @@ footer {
 .hamburger {
   display: none;
   flex-direction: column; justify-content: center; align-items: center;
-  gap: 5px; width: 36px; height: 36px; cursor: pointer;
-  background: none; border: none; padding: 4px;
+  gap: 5px; width: 34px; height: 34px; cursor: pointer;
+  background: none; border: none; padding: 4px; z-index: 201; position: relative;
 }
 .hamburger span {
-  display: block; width: 22px; height: 2px;
+  display: block; width: 20px; height: 2px;
   background: var(--navy, #141838); border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s;
 }
 .mobile-menu {
-  display: none; position: fixed; top: 0; right: 0; left: 0; bottom: 0;
-  background: rgba(255,255,255,0.98); backdrop-filter: blur(16px);
-  z-index: 200; flex-direction: column; align-items: center; justify-content: center;
-  gap: 32px;
+  display: none; position: fixed;
+  top: 56px; left: 12px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(20,24,56,0.15);
+  z-index: 200;
+  flex-direction: column;
+  padding: 8px 0;
+  min-width: 180px;
+  border: 1px solid rgba(20,24,56,0.07);
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu a {
-  font-size: 22px; font-weight: 600; color: var(--navy, #141838);
+  font-size: 15px; font-weight: 500; color: var(--navy, #141838);
   text-decoration: none; font-family: 'Heebo', sans-serif;
+  padding: 12px 20px;
 }
-.mobile-menu a.active { color: var(--coral, #ed7174); }
+.mobile-menu a:hover { background: rgba(20,24,56,0.04); }
+.mobile-menu a.active { color: var(--coral, #ed7174); font-weight: 700; }
 .mobile-menu .mobile-cta {
-  margin-top: 8px; background: var(--coral, #ed7174); color: white;
-  padding: 14px 36px; border-radius: 30px; font-size: 16px; font-weight: 700;
+  margin: 8px 12px 4px;
+  background: var(--coral, #ed7174); color: white !important;
+  padding: 11px 20px; border-radius: 24px;
+  font-size: 14px; font-weight: 700; text-align: center;
 }
-.mobile-close {
-  position: absolute; top: 20px; left: 20px;
-  background: none; border: none; font-size: 28px; cursor: pointer;
-  color: var(--navy, #141838); line-height: 1; font-family: 'Heebo', sans-serif;
+.mobile-menu .mobile-cta:hover { background: #d9595c; }
+.mobile-menu-divider {
+  height: 1px; background: rgba(20,24,56,0.07); margin: 4px 0;
 }
 @media (max-width: 700px) {
   .hamburger { display: flex; }
@@ -787,15 +795,15 @@ footer {
 
 <!-- ── HEADER ── -->
 <header>
-  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="תפריט">
+  <button class="hamburger" onclick="var m=document.getElementById('mobileMenu');m.classList.toggle('open');event.stopPropagation();" aria-label="תפריט">
     <span></span><span></span><span></span>
   </button>
   <div id="mobileMenu" class="mobile-menu">
-    <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
     <a href="index.html#articles">חדשות</a>
     <a href="sdedov_projects_demo.html">פרויקטים</a>
     <a href="index.html#guides">מדריכים</a>
     <a href="index.html#map">מפת האזור</a>
+    <div class="mobile-menu-divider"></div>
     <a href="index.html#lead" class="mobile-cta">קבלו עדכונים</a>
   </div>
   <div class="header-logo">
@@ -1416,6 +1424,14 @@ map.on('load', () => {
     els.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+<script>
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('mobileMenu');
+  if (menu && !menu.contains(e.target) && !e.target.closest('.hamburger')) {
+    menu.classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>
