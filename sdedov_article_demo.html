@@ -192,6 +192,11 @@
     margin-bottom: 24px;
   }
   .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 600px) {
+    .data-grid { grid-template-columns: 1fr; gap: 20px; }
+    .data-box { padding: 24px 20px; }
+    .data-num { font-size: 42px; }
+  }
   .data-item {}
   .data-num { font-size: 36px; font-weight: 800; color: white; line-height: 1; }
   .data-num span { font-size: 20px; color: var(--coral); }
